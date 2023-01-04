@@ -1,0 +1,7 @@
+#model weight and config files
+seg_model_weight_and_config/*
+
+#Python caches
+__pycache__/
+
+.DS_Store

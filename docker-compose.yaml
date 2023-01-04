@@ -1,0 +1,25 @@
+version: '3.7'
+
+services:
+  ngrok:
+    image: wernight/ngrok
+    environment:
+      NGROK_AUTH: 2FcDsGcVEibzEoJGtKO8vtGETFV_2WzxxC1u2BKcCnfakmUr3
+      NGROK_DEBUG: 1
+      NGROK_PORT: gradio:8888
+    ports:
+      - 4040:4040
+    links:
+      - gradio
+
+  gradio:
+    build:
+      dockerfile: Dockerfile
+    command: nvidia-smi
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [gpu]
+    ports: 
+      - 8888:8888
