@@ -4,7 +4,7 @@ services:
   ngrok:
     image: wernight/ngrok
     environment:
-      NGROK_AUTH: 2FcDsGcVEibzEoJGtKO8vtGETFV_2WzxxC1u2BKcCnfakmUr3
+      NGROK_AUTH: <YOUR-NGROK_AUTH-KEY-FROM-ngrok.com>
       NGROK_DEBUG: 1
       NGROK_PORT: gradio:8888
     ports:

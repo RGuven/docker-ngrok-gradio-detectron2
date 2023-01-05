@@ -13,7 +13,6 @@ RESULT_FOLDER_PATH=".//_results"
 segmentation_service = Segmentation()
 
 def segmentation(img_temp_file_path):
-    #gradio'ya filepath verildiği zaman tmp'te tutuyor.
     image_file_name = os.path.basename(img_temp_file_path)
     
     #new image path which is located in the _uploads folder
