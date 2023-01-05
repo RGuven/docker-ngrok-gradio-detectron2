@@ -54,6 +54,9 @@ RUN pip3 install torch==1.12.1+cu113 \
 #install detectron2
 RUN python3 -m pip install 'git+https://github.com/facebookresearch/detectron2.git'
 
+# set FORCE_CUDA because during `docker build` cuda is not accessible
+ENV FORCE_CUDA="1"
+
 WORKDIR /workspace
 
 COPY requirements.txt .
