@@ -1,5 +1,6 @@
 import os,shutil
 import gradio as gr
+import pandas as pd     
 
 from utils.formatter import clips_formatter
 from utils.segmentation import Segmentation
@@ -31,7 +32,16 @@ def segmentation(img_temp_file_path):
     }
 
     predicted_image = f"{RESULT_FOLDER_PATH}//{image_file_name}"
-    return predicted_image,prediction
+
+
+    df=pd.DataFrame.from_dict(prediction['clips'])
+    
+    df['box']=pd.Series([list(bbox.values()) for bbox in df['box'].values ])
+
+    #reorder columns
+    new_df = df[['clip_id','class_name','score','box','bounding_polygon']]
+
+    return predicted_image, new_df
     
 
     
@@ -43,10 +53,14 @@ def main():
 
 
     title= "Newspaper Layout Segmentation Project"
-
+    
     demo = gr.Interface(segmentation, 
-                        gr.Image(type="filepath",label="Newspaper Page").style(height=700), 
-                        [gr.Image().style(height=700),"json"],
+                        gr.Image(type="filepath",label="Newspaper Page"), 
+                        [gr.Image(),
+                         gr.DataFrame(headers = ['clip_id', 'class_name', 'score', 'bbox(XyXy)','bounding_polygon'],
+                                      datatype=['number','str','number','str','str'],
+                                      type='pandas')
+                        ],
                         examples=examples,
                         title=title)
                         
